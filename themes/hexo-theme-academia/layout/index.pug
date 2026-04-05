@@ -1,0 +1,16 @@
+extends includes/layout
+
+block content
+    .page(itemscope itemtype='http://schema.org/CreativeWork')
+        h2.page-title Blog
+        .masonry
+            each post in page.posts.data
+                if post.academia
+                    .masonry-item
+                        .masonry-card
+                            h3.masonry-title
+                                a(href=url_for(post.path))= post.title || post.slug
+                            if post.date
+                                .masonry-meta= post.date.format('YYYY-MM-DD')
+                            if post.excerpt
+                                .masonry-excerpt!= post.excerpt
