@@ -1,0 +1,34 @@
+filters:
+  and:
+    - academia == true
+properties:
+  file.name:
+    displayName: 笔记
+  date:
+    displayName: 日期
+  tags:
+    displayName: 标签
+  section:
+    displayName: 分区
+  academia:
+    displayName: 学术
+  file.mtime:
+    displayName: 更新时间
+views:
+  - type: table
+    name: 学习索引
+    order:
+      - file.name
+      - date
+      - tags
+      - section
+      - academia
+      - file.mtime
+    columnSize:
+      note.tags: 394
+  - type: cards
+    name: 按标签浏览
+    order:
+      - file.name
+      - tags
+      - date
