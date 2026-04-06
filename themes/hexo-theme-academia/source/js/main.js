@@ -1,4 +1,15 @@
 $(function () {
+    function renderMermaid() {
+        if (!window.mermaid) return;
+        if (typeof window.mermaid.run === 'function') {
+            window.mermaid.run({ querySelector: 'pre.mermaid' });
+            return;
+        }
+        if (typeof window.mermaid.init === 'function') {
+            window.mermaid.init(undefined, document.querySelectorAll('pre.mermaid'));
+        }
+    }
+
     // resize window
     $(window).resize(function () {
         if ($(window).width() < 1280 && $(window).width()>540) {
@@ -82,6 +93,8 @@ $(function () {
             if ($(".nav").hasClass("nav-open")) {
                 $(".nav").removeClass("nav-open").addClass("nav-close")
             }
+            // PJAX only swaps .page content, so Mermaid must rerun after each swap.
+            renderMermaid();
         }
     });
 
@@ -100,5 +113,8 @@ $(function () {
             }
         });
     });
+
+    // Ensure Mermaid diagrams render on the first page load too.
+    renderMermaid();
 
 })

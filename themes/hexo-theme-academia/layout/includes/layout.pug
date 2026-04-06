@@ -19,4 +19,15 @@ html(lang=config.language)
         footer#page_footer
             include ./footer.pug
         each item in theme.CDN_USE.js
-            script(src=url_for(item))
+            != '<script src="' + url_for(item) + '"></script>'
+        if config.mermaid && config.mermaid.enable
+            != '<script src="https://cdn.jsdelivr.net/npm/mermaid@' + (config.mermaid.version || '10.9.1') + '/dist/mermaid.min.js"></script>'
+            script.
+                (function() {
+                  if (!window.mermaid) return;
+                  var options = !{JSON.stringify(config.mermaid.options || { startOnLoad: true })};
+                  window.mermaid.initialize(options);
+                  if (typeof window.mermaid.run === 'function') {
+                    window.mermaid.run({ querySelector: 'pre.mermaid' });
+                  }
+                })();
